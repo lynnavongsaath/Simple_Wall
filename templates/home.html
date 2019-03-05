@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
+    <link rel="stylesheet" href="/static/style/style.css">
+    <title>Home: Coding Dojo Wall</title>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><img src="/static/images/codingdojo.jpg" width="50" height="50" class="d-inline-block align-center" alt=""></a> 
+        <div class="navbar ml-0">
+            <h3 class="blog-header-logo text-white">Coding Dojo Wall</h3>
+        </div>
+        <div class="col-8 text-center ml-4">
+            <a class="blog-header-logo text-white" href="#">Welcome {{ name }}!</a>
+        </div>
+        <div>
+            <a class="text-white" href="/logout">Log Out</a>
+        </div>
+    </nav>
+    {% with errors = get_flashed_messages(category_filter=["register"]) %}
+        {% if errors %}
+            {% for msg in errors %}
+                <p class="register">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="container col-4">
+        {% if num_of_msg == Null %}
+            <h3>0 message(s) for you, {{ name }}</h3>
+            {% elif num_of_msg != 0 %}
+            <h3>{{ num_of_msg }} message(s) for you, {{ name }}</h3>
+        {% endif %}
+
+        {% for messages in user_msg %}
+            <div>
+                <div class="comments col-8">
+                    <p class="users_comment">{{ messages['message_from'] }} said (__ hours ago):</p>
+                    <p class="users_message">"{{ messages['content'] }}"</p>
+                </div>
+                <form class="delete" action="/delete/{{ messages['id'] }}" method="post">
+                    <input type="hidden" class="delete" name="delete">
+                    <input type="submit" class="delete" value="Delete">
+                    <!-- <a href="/delete/{{ messages['id'] }}" method="post"><img class="delete" src="static/delete_trashcan_icon.png" alt="delete_trashcan_icon"></a> -->
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="container col-6">
+        <h3>Send a message</h3>
+        {% for user in all_users %}
+            <div>
+                <h6 class="msg_tosend col-2">{{ user['first_name'] }}</h6>
+                <form action="/send_msg/{{ user['id'] }}" class="msg_tosend" method="post">
+                    <input type="hidden" name="user">
+                    <textarea name="msg_tosend" class="msg_tosend" cols="20" rows="3"></textarea>
+                    <input type="submit"  class="msg_tosend" value="Submit">
+                </form>
+            </div>
+            <br>
+        {% endfor %}
+
+    </div>
+</body>
+</html>

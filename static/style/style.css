@@ -1,0 +1,30 @@
+* {
+    margin:0px;
+}
+div.container{
+    display: inline-block;
+    vertical-align: top;
+    margin: 40px;
+}
+p.users_message {
+    margin-left: 35px;
+}
+p.users_comment {
+    margin: 0px;
+}
+div.comments{
+    display: inline-block;
+}
+form.delete{
+    display: inline-block;
+}
+input.delete {
+    display: inline;
+}
+.msg_tosend {
+    display: inline-block;
+    vertical-align: top;
+}
+input.msg_tosend {
+    margin-left: 15px;
+}
